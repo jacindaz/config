@@ -1,0 +1,54 @@
+# to get to this file
+# Atom >> Open your Config
+
+'global':
+  'exception-reporting':
+    'userId': 'ee4b2f76-f827-e502-98f2-518ce4b1d4cd'
+  'welcome':
+    'showOnStartup': false
+  'core':
+    'themes': [
+      'atom-dark-ui'
+      'monokai'
+    ]
+  'editor':
+    'invisibles': {}
+    'tabLength': 4
+    'softWrap': true
+    'showLineNumbers': true
+    'showIndentGuide': true
+  'tabs': {}
+  'tabs-to-spaces':
+    'onSave': 'untabify'
+
+
+'.shell.source':
+  'editor':
+    'tabLength': 4
+'.python.source':
+  'editor':
+    'tabLength': 4
+'.java.source':
+  'editor':
+    'tabLength': 4
+'.gfm.source':
+  'editor':
+    'showInvisibles': false
+    'softWrap': true
+    'tabLength': 4
+'.c.source':
+  'editor':
+    'tabLength': 4
+'.html.source':
+  'editor':
+    'tabLength': 4
+'.html.erb.source':
+  'editor':
+    'tabLength': 4
+'.html.haml.source':
+  'editor':
+    'tabLength': 4
+'.rb.source':
+  'editor':
+    'tabLength': 2
+
