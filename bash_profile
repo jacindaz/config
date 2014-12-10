@@ -1,5 +1,49 @@
 export PATH=~/bin:$PATH
- 
+
+export GITAWAREPROMPT=~/.bash/git-aware-prompt
+source $GITAWAREPROMPT/main.sh
+
+
+print_before_the_prompt () {
+    git_branch="$(git branch | grep \*)"
+    if [[ -z "$git_branch" ]]; then
+        printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD"
+    else
+        printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD" "($git_branch)"
+    fi
+}
+
+PROMPT_COMMAND=print_before_the_prompt
+PS1='->'
+
+export RUBY_GC_HEAP_INIT_SLOTS=1000000
+export RUBY_HEAP_SLOTS_INCREMENT=1000000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+export RUBY_GC_MALLOC_LIMIT=1000000000
+export RUBY_HEAP_FREE_MIN=500000
+export ARCHFLAGS="-arch x86_64"
+eval "$(rbenv init -)"
+
+# CD into a Directory
+alias bp='vim ~/.bash_profile'
+alias jz='cd ~/Documents/jacinda'
+alias plmsite='cd ~/src/plm'
+alias edx='cd ~/Documents/jacinda/6\.00\.2x'
+alias testfiles='cd ~/Documents/test_files'
+
+# Git
+alias gs='git status'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gp='git pull'
+alias gf='git fetch'
+alias gfa='git fetch --all'
+
+# Rails
+alias rcs='rails console --sandbox'
+alias rs='rails server'
+alias brs='bundle && rails server'
+
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
 txtgrn='\e[0;32m' # Green
@@ -33,36 +77,3 @@ bakpur='\e[45m'   # Purple
 bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
- 
-print_before_the_prompt () {
-    printf "$txtgrn%s: $bldblu%s $txtpur%s\n$txtrst" "$USER" "$PWD" 
-}
- 
-PROMPT_COMMAND=print_before_the_prompt
-PS1='->'
-
-export RUBY_GC_HEAP_INIT_SLOTS=1000000 
-export RUBY_HEAP_SLOTS_INCREMENT=1000000 
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1 
-export RUBY_GC_MALLOC_LIMIT=1000000000 
-export RUBY_HEAP_FREE_MIN=500000
-export ARCHFLAGS="-arch x86_64"
-eval "$(rbenv init -)"
-
-# CD into a Directory
-alias plmsite='cd /Users/jacindazhong/Documents/PatientsLikeMe/plm-website'
-alias bp='vim ~/.bash_profile'
-alias jz='cd ~/Documents/jacinda'
-alias edx='cd ~/Documents/jacinda/6\.00\.2x'
-
-# Git
-alias gs='git status'
-alias gc='git commit'
-alias gcm='git commit -m'
-alias gp='git pull'
-alias gf='git fetch'
-alias gfa='git fetch --all'
-
-# Rails
-alias rcs='rails console --sandbox'
-alias rs='rails server'
