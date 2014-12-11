@@ -3,13 +3,12 @@ export PATH=~/bin:$PATH
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 source $GITAWAREPROMPT/main.sh
 
-
 print_before_the_prompt () {
-    git_branch="$(git branch | grep \*)"
+    git_branch="$(git branch 2> /dev/null| grep \*)"
     if [[ -z "$git_branch" ]]; then
         printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD"
     else
-        printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD" "($git_branch)"
+        printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD" "(git $git_branch)"
     fi
 }
 
@@ -30,6 +29,7 @@ alias jz='cd ~/Documents/jacinda'
 alias plmsite='cd ~/src/plm'
 alias edx='cd ~/Documents/jacinda/6\.00\.2x'
 alias testfiles='cd ~/Documents/test_files'
+alias bugs='cd ~/src/plm/bugs'
 
 # Git
 alias gs='git status'
