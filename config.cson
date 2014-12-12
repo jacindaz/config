@@ -11,17 +11,34 @@
       'atom-dark-ui'
       'monokai'
     ]
+    'disabledPackages': [
+      'tabs'
+      'tree-view'
+    ]
   'editor':
-    'invisibles': {}
-    'tabLength': 4
     'softWrap': true
-    'showLineNumbers': true
     'showIndentGuide': true
-  'tabs': {}
+    'fontSize': 18
   'tabs-to-spaces':
     'onSave': 'untabify'
-
-
+  'tabs':
+    'showIcons': true
+  'tree-view':
+    'hideVcsIgnoredFiles': false
+    'hideIgnoredNames': false
+    'showOnRightSide': false
+'.erb.html.source':
+  'editor':
+    'tabLength': 2
+'.haml.html.source':
+  'editor':
+    'tabLength': 2
+'.coffee.js.source':
+  'editor':
+    'tabLength': 2
+'.js.source':
+  'tabs-to-spaces':
+    'onSave': 'none'
 '.shell.source':
   'editor':
     'tabLength': 4
@@ -31,21 +48,10 @@
 '.java.source':
   'editor':
     'tabLength': 4
-'.gfm.source':
-  'editor':
-    'showInvisibles': false
-    'softWrap': true
-    'tabLength': 4
 '.c.source':
   'editor':
     'tabLength': 4
 '.html.source':
-  'editor':
-    'tabLength': 4
-'.html.erb.source':
-  'editor':
-    'tabLength': 4
-'.html.haml.source':
   'editor':
     'tabLength': 4
 '.rb.source':
