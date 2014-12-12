@@ -8,12 +8,12 @@ print_before_the_prompt () {
     if [[ -z "$git_branch" ]]; then
         printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD"
     else
-        printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD" "(git $git_branch)"
+        printf "$txtgrn%s: $bldblu%s $undcyn%s $bldpur%s \n$txtrst" "$USER" "$PWD" "(git)"  "$git_branch"
     fi
 }
 
 PROMPT_COMMAND=print_before_the_prompt
-PS1='->'
+PS1='>>> '
 
 export RUBY_GC_HEAP_INIT_SLOTS=1000000
 export RUBY_HEAP_SLOTS_INCREMENT=1000000
