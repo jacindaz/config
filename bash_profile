@@ -30,6 +30,8 @@ alias plmsite='cd ~/src/plm'
 alias edx='cd ~/Documents/jacinda/6\.00\.2x'
 alias testfiles='cd ~/Documents/test_files'
 alias bugs='cd ~/src/plm/bugs'
+alias rp='cd ~/src/research-portal'
+alias gxd='gitx --diff'
 
 # Git
 alias gs='git status'
