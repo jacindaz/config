@@ -35,6 +35,7 @@ alias gxd='gitx --diff'
 
 # Git
 alias gs='git status'
+alias gss="git status -s"   # displays cleaned up version of git status
 alias gc='git commit'
 alias gcm='git commit -m'
 alias gp='git pull'
