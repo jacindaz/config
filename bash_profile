@@ -41,11 +41,38 @@ alias gcm='git commit -m'
 alias gp='git pull'
 alias gf='git fetch'
 alias gfa='git fetch --all'
+alias ga='git add'
+alias gb='git branch'
+alias g ='git'
+alias gpoh='git push origin head'
 
 # Rails
 alias rcs='rails console --sandbox'
 alias rs='rails server'
 alias brs='bundle && rails server'
+alias rakedbdcm='rake db:drop && rake db:create && rake db:migrate'
+
+# Directory Navigation work
+alias edx='cd Documents/Programming/Courses/edX\ 6.002x\ Intro\ to\ Computational\ Thinking\ and\ Data\ Science'
+alias zsh='vim ~/.oh-my-zsh/lib/aliases.zsh'
+alias zsh_dir='vim ~/.oh-my-zsh/lib/aliases.zsh'
+alias courses='cd ~/Documents/Programming/Courses'
+alias sublpkg='cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages'
+alias projects='cd ~/Documents/Programming/Projects'
+alias plm='cd ~/Documents/PatientsLikeMe/plm-website'
+
+# Directory Navigation home
+alias edx='cd Documents/Programming/Courses/edX\ 6.002x\ Intro\ to\ Computational\ Thinking\ and\ Data\ Science'
+alias zsh='vim ~/.oh-my-zsh/lib/aliases.zsh'
+alias zsh_dir='vim ~/.oh-my-zsh/lib/aliases.zsh'
+alias courses='cd ~/Documents/Programming/Courses'
+alias sublpkg='cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages'
+alias projects='cd ~/Documents/Programming/Projects'
+alias plm='cd ~/Documents/PatientsLikeMe/plm-website'
+
+# Mac Helpers
+alias show_hidden="defaults write com.apple.Finder AppleShowAllFiles YES && killall Finder"
+alias hide_hidden="defaults write com.apple.Finder AppleShowAllFiles NO && killall Finder"
 
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
