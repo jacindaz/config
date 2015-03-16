@@ -57,8 +57,14 @@ alias gr='git reset'
 # Rails
 alias rcs='rails console --sandbox'
 alias rs='rails server'
+alias rc='rails console'
 alias brs='bundle && rails server'
-alias rakedbdcm='rake db:drop && rake db:create && rake db:migrate'
+alias hr='heroku run'
+alias rdm='rake db:migrate'
+alias dcms='rake db:drop && rake db:create && rake db:migrate && rake db:seed'
+alias rgm='rails g migration'
+alias rds='rake db:seed'
+alias rdr='rake db:rollback'
 
 # Directory Navigation work
 alias edx='cd Documents/Programming/Courses/edX\ 6.002x\ Intro\ to\ Computational\ Thinking\ and\ Data\ Science'
