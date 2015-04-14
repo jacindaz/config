@@ -1,9 +1,10 @@
 {
 	"bold_folder_labels": true,
 	"caret_style": "underline",
-	"color_scheme": "Packages/Seahorse_Theme/Seahorse.tmTheme",
+	"color_scheme": "Packages/Colorsublime-Themes/Bittersweet.tmTheme",
 	"font_face": "Consolas",
 	"font_size": 16.0,
+	"hide_minimap": true,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
@@ -13,8 +14,8 @@
 	"line_numbers": true,
 	"show_minimap": false,
 	"theme": "Soda Light.sublime-theme",
-	
-	"translate_tabs_to_spaces": false,  // if you have this set to 'true', will make sublime crash
+	"translate_tabs_to_spaces": false, // if you have this set to 'true', will make sublime crash 
 	"wide_caret": true,
-	"word_wrap": true
+	"word_wrap": true,
+	"draw_indent_guides": true
 }
