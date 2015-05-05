@@ -53,6 +53,8 @@ alias gpu='git push'
 alias gch='git checkout HEAD'
 alias gco='git checkout'
 alias gr='git reset'
+alias ga='git add'
+alias gdhh='git diff HEAD^ HEAD'
 
 # Rails
 alias rcs='rails console --sandbox'
@@ -65,6 +67,12 @@ alias dcms='rake db:drop && rake db:create && rake db:migrate && rake db:seed'
 alias rgm='rails g migration'
 alias rds='rake db:seed'
 alias rdr='rake db:rollback'
+alias zc='zeus console'
+alias zs='zeus server'
+alias zst='zeus start'
+
+#Xcode
+alias xcode="open *.xcodeproj"
 
 # Directory Navigation work
 alias edx='cd Documents/Programming/Courses/edX\ 6.002x\ Intro\ to\ Computational\ Thinking\ and\ Data\ Science'
