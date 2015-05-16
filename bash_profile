@@ -71,6 +71,7 @@ alias rdr='rake db:rollback'
 alias zc='zeus console'
 alias zs='zeus server'
 alias zst='zeus start'
+alias b='bundle install'
 
 #Xcode
 alias xcode="open *.xcodeproj"
