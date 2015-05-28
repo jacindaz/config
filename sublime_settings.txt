@@ -1,9 +1,12 @@
 {
 	"bold_folder_labels": true,
-	"caret_style": "underline",
+	"caret_style": "phase",
 	"color_scheme": "Packages/Colorsublime-Themes/Bittersweet.tmTheme",
+	"draw_indent_guides": true,
+	"fade_fold_buttons": false, 
 	"font_face": "Consolas",
-	"font_size": 18.0,
+	"font_size": 17.0,
+	"hide_minimap": true,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
@@ -13,8 +16,7 @@
 	"line_numbers": true,
 	"show_minimap": false,
 	"theme": "Soda Light.sublime-theme",
-	
-	"translate_tabs_to_spaces": false,  // if you have this set to 'true', will make sublime crash
+	"translate_tabs_to_spaces": false,
 	"wide_caret": true,
 	"word_wrap": true
 }
