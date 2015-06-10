@@ -56,6 +56,7 @@ alias gr='git reset'
 alias ga='git add'
 alias gdhh='git diff HEAD^ HEAD'
 alias gplr='git pull --rebase'
+alias gdc='git diff --cached'
 
 # Rails
 alias rcs='rails console --sandbox'
