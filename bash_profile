@@ -4,16 +4,17 @@ export GITAWAREPROMPT=~/.bash/git-aware-prompt
 source $GITAWAREPROMPT/main.sh
 
 print_before_the_prompt () {
+    git_repo="$(git branch 2> /dev/null| grep \*)"
     git_branch="$(git branch 2> /dev/null| grep \*)"
     if [[ -z "$git_branch" ]]; then
-        printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD"
+        printf "\n$txtgrn%s: $txtblu%s $bldpur%s\n$txtrst" "$USER" "$PWD"
     else
-        printf "$txtgrn%s: $bldblu%s $undcyn%s $bldpur%s \n$txtrst" "$USER" "$PWD" "(git)"  "$git_branch"
+        printf "\n$txtgrn%s: $txtblu%s \n$bldred%s $bldpur%s $txtrst\n" "$USER" "$PWD" "git branch => "  "$git_branch"
     fi
 }
 
 PROMPT_COMMAND=print_before_the_prompt
-PS1='>>> '
+PS1='>>>> '
 
 export RUBY_GC_HEAP_INIT_SLOTS=1000000
 export RUBY_HEAP_SLOTS_INCREMENT=1000000
@@ -24,14 +25,27 @@ export ARCHFLAGS="-arch x86_64"
 eval "$(rbenv init -)"
 
 # CD into a Directory
+alias cdgb='cd ~/Documents/gitbook'
 alias bp='vim ~/.bash_profile'
 alias jz='cd ~/Documents/jacinda'
 alias plmsite='cd ~/src/plm'
-alias edx='cd ~/Documents/jacinda/6\.00\.2x'
+alias tb='cd ~/src/tech-blog'
+alias ore='cd ~/src/open-pro'
+alias plm-master='cd ~/src/plm/master'
+alias italia='cd ~/Documents/jacinda/italia'
+alias cdrails='cd ~/Documents/PatientsLikeMe/rails'
+alias storyboard='cd ~/Documents/PatientsLikeMe/HKTutorialBase'
+
 alias testfiles='cd ~/Documents/test_files'
+alias master='cd ~/src/plm/master'
 alias bugs='cd ~/src/plm/bugs'
+alias quick_hits='cd ~/src/plm/quick_hits'
 alias rp='cd ~/src/research-portal'
 alias gxd='gitx --diff'
+alias zsh='vim ~/.zshrc'
+alias current='cd ~/src/plm/current'
+
+alias ee='cd /Users/jacindazhong/Documents/jacinda/usr/exercism_exercises'
 
 # Git
 alias gs='git status'
@@ -46,6 +60,7 @@ alias branchdiff='git config --global --add alias.branchdiff-files "log --left-r
 alias gpr='git pull --rebase'
 alias gls='git log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --graph'
 alias gpl='git pull'
+alias gplr='git pull --rebase'
 alias gas='git add . && git status'
 alias gbd='git branch -D'
 alias gb='git branch'
@@ -55,7 +70,6 @@ alias gco='git checkout'
 alias gr='git reset'
 alias ga='git add'
 alias gdhh='git diff HEAD^ HEAD'
-alias gplr='git pull --rebase'
 alias gdc='git diff --cached'
 alias gd='git diff'
 
@@ -73,32 +87,14 @@ alias rdr='rake db:rollback'
 alias zc='zeus console'
 alias zs='zeus server'
 alias zst='zeus start'
-alias b='bundle install'
 
 #Xcode
 alias xcode="open *.xcodeproj"
 
-# Directory Navigation work
-alias edx='cd Documents/Programming/Courses/edX\ 6.002x\ Intro\ to\ Computational\ Thinking\ and\ Data\ Science'
-alias zsh='vim ~/.oh-my-zsh/lib/aliases.zsh'
-alias zsh_dir='vim ~/.oh-my-zsh/lib/aliases.zsh'
-alias courses='cd ~/Documents/Programming/Courses'
-alias sublpkg='cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages'
-alias projects='cd ~/Documents/Programming/Projects'
-alias plm='cd ~/Documents/PatientsLikeMe/plm-website'
-
-# Directory Navigation home
-alias edx='cd Documents/Programming/Courses/edX\ 6.002x\ Intro\ to\ Computational\ Thinking\ and\ Data\ Science'
-alias zsh='vim ~/.oh-my-zsh/lib/aliases.zsh'
-alias zsh_dir='vim ~/.oh-my-zsh/lib/aliases.zsh'
-alias courses='cd ~/Documents/Programming/Courses'
-alias sublpkg='cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages'
-alias projects='cd ~/Documents/Programming/Projects'
-alias plm='cd ~/Documents/PatientsLikeMe/plm-website'
-
-# Mac Helpers
-alias show_hidden="defaults write com.apple.Finder AppleShowAllFiles YES && killall Finder"
-alias hide_hidden="defaults write com.apple.Finder AppleShowAllFiles NO && killall Finder"
+# Temporary aliases
+alias 7261='cd ~/src/plm/provider_picker_7261'
+alias 8056='cd ~/src/plm/8056_interview_procedures_and_lab_tests_picker'
+alias weight='cd ~/src/plm/weight_do_not_publicly_display'
 
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
