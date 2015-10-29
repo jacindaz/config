@@ -1,8 +1,8 @@
 [
     // Keybinding for switching between column panes
     // Default is ctrl+1, 2, etc.
-    { "keys": ["alt+1"], "command": "focus_group", "args": { "group": 0 } },
-    { "keys": ["alt+2"], "command": "focus_group", "args": { "group": 1 } },
+    { "keys": ["ctrl+shift+1"], "command": "focus_group", "args": { "group": 0 } },
+    { "keys": ["ctrl+shift+2"], "command": "focus_group", "args": { "group": 1 } },
 
     // Move back and forth between tabs like in Chrome
     { "keys": ["ctrl+tab"], "command": "next_view" },
