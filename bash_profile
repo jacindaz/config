@@ -23,6 +23,7 @@ export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 export ARCHFLAGS="-arch x86_64"
 eval "$(rbenv init -)"
+eval "$(docker-machine env default)"
 
 # CD into a Directory
 alias cdgb='cd ~/Documents/gitbook'
@@ -31,18 +32,16 @@ alias jz='cd ~/Documents/jacinda'
 alias plmsite='cd ~/src/plm'
 alias tb='cd ~/src/tech-blog'
 alias ore='cd ~/src/open-pro'
-alias plm-master='cd ~/src/plm/master'
 alias italia='cd ~/Documents/jacinda/italia'
 alias cdrails='cd ~/Documents/PatientsLikeMe/rails'
 alias storyboard='cd ~/Documents/PatientsLikeMe/HKTutorialBase'
+alias rp='cd ~/src/research_portal'
+alias dw2='cd ~/src/data-warehouse-2'
 
-alias testfiles='cd ~/Documents/test_files'
 alias master='cd ~/src/plm/master'
 alias bugs='cd ~/src/plm/bugs'
 alias quick_hits='cd ~/src/plm/quick_hits'
-alias rp='cd ~/src/research-portal'
 alias gxd='gitx --diff'
-alias zsh='vim ~/.zshrc'
 alias current='cd ~/src/plm/current'
 
 alias ee='cd /Users/jacindazhong/Documents/jacinda/usr/exercism_exercises'
@@ -92,9 +91,9 @@ alias zst='zeus start'
 alias xcode="open *.xcodeproj"
 
 # Temporary aliases
-alias 7261='cd ~/src/plm/provider_picker_7261'
-alias 8056='cd ~/src/plm/8056_interview_procedures_and_lab_tests_picker'
 alias weight='cd ~/src/plm/weight_do_not_publicly_display'
+alias 8750='cd ~/src/plm/8750_dana_farber_create_two_urls_and_send_chemo_start_date_to_et'
+alias 8506='cd ~/src/plm/8506_clinical_trial_tool_search_sponsor_field'
 
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
