@@ -16,8 +16,10 @@
 		"Vintage"
 	],
 	"line_numbers": true,
+	"save_on_focus_list": true,
 	"scroll_past_end": true,
 	"show_minimap": false,
+	"show_full_path": true,
 	"theme": "Soda Light.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_automatic_white_space": true,
