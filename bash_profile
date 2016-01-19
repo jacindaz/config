@@ -21,6 +21,9 @@ export RUBY_HEAP_SLOTS_INCREMENT=1000000
 export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
+export BUNDLER_EDITOR='subl -w'
+export pry_hook_error='This should be overwritten by pry, when we have errors.'
+
 export ARCHFLAGS="-arch x86_64"
 eval "$(rbenv init -)"
 eval "$(docker-machine env default)"
@@ -45,6 +48,7 @@ alias gxd='gitx --diff'
 alias current='cd ~/src/plm/current'
 
 alias ee='cd /Users/jacindazhong/Documents/jacinda/usr/exercism_exercises'
+alias openemail='open -a Google\ Chrome -n https://mail.google.com/mail/u/0/#inbox https://calendar.google.com/calendar/render?tab=mc#main_7 https://patientslikeme.slack.com/messages/thepit/ https://mail.google.com/mail/u/1/#inbox https://calendar.google.com/calendar/b/1/render?tab=mc#main_7 '
 
 # Git
 alias gs='git status'
@@ -128,3 +132,8 @@ bakpur='\e[45m'   # Purple
 bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
+
+# Setting PATH for Python 2.7
+# The orginal version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+export PATH
