@@ -22,7 +22,6 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 export BUNDLER_EDITOR='subl -w'
-export pry_hook_error='This should be overwritten by pry, when we have errors.'
 
 export ARCHFLAGS="-arch x86_64"
 eval "$(rbenv init -)"
