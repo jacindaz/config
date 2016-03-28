@@ -28,26 +28,19 @@ eval "$(rbenv init -)"
 eval "$(docker-machine env default)"
 
 # CD into a Directory
-alias cdgb='cd ~/Documents/gitbook'
 alias bp='vim ~/.bash_profile'
 alias jz='cd ~/Documents/jacinda'
 alias plmsite='cd ~/src/plm'
-alias tb='cd ~/src/tech-blog'
 alias ore='cd ~/src/open-pro'
-alias italia='cd ~/Documents/jacinda/italia'
-alias cdrails='cd ~/Documents/PatientsLikeMe/rails'
-alias storyboard='cd ~/Documents/PatientsLikeMe/HKTutorialBase'
 alias rp='cd ~/src/research_portal'
 alias dw2='cd ~/src/data-warehouse-2'
 
 alias master='cd ~/src/plm/master'
 alias bugs='cd ~/src/plm/bugs'
-alias quick_hits='cd ~/src/plm/quick_hits'
 alias gxd='gitx --diff'
 alias current='cd ~/src/plm/current'
 
-alias ee='cd /Users/jacindazhong/Documents/jacinda/usr/exercism_exercises'
-alias openemail='open -a Google\ Chrome -n https://mail.google.com/mail/u/0/#inbox https://calendar.google.com/calendar/render?tab=mc#main_7 https://patientslikeme.slack.com/messages/thepit/ https://mail.google.com/mail/u/1/#inbox https://calendar.google.com/calendar/b/1/render?tab=mc#main_7 '
+alias openemail='open -a Google\ Chrome https://mail.google.com/mail/u/0/#inbox https://calendar.google.com/calendar/render?tab=mc#main_7 https://patientslikeme.slack.com/messages/thepit/ https://mail.google.com/mail/u/1/#inbox https://calendar.google.com/calendar/b/1/render?tab=mc#main_7 '
 
 # Git
 alias gs='git status'
@@ -81,22 +74,7 @@ alias rs='rails server'
 alias rc='rails console'
 alias brs='bundle && rails server'
 alias hr='heroku run'
-alias rdm='rake db:migrate'
 alias dcms='rake db:drop && rake db:create && rake db:migrate && rake db:seed'
-alias rgm='rails g migration'
-alias rds='rake db:seed'
-alias rdr='rake db:rollback'
-alias zc='zeus console'
-alias zs='zeus server'
-alias zst='zeus start'
-
-#Xcode
-alias xcode="open *.xcodeproj"
-
-# Temporary aliases
-alias weight='cd ~/src/plm/weight_do_not_publicly_display'
-alias 8750='cd ~/src/plm/8750_dana_farber_create_two_urls_and_send_chemo_start_date_to_et'
-alias 8506='cd ~/src/plm/8506_clinical_trial_tool_search_sponsor_field'
 
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
@@ -136,3 +114,13 @@ txtrst='\e[0m'    # Text Reset
 # The orginal version is saved in .bash_profile.pysave
 PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 export PATH
+
+function newetldir () {
+    cd /Users/jacindazhong/src/research_platform/
+    git clone git@github.com:patientslikeme/data-warehouse-2.git $1
+    cd /Users/jacindazhong/src/research_platform/$1
+
+    ln -s development/application.yml config/application.yml
+    ln -s development/database.yml config/database.yml
+    git checkout -b $1
+}
