@@ -22,9 +22,14 @@
         <dict>
             <key>settings</key>
             <dict>
-
+                <!--subliime main background color-->
                 <key>background</key>
-                <string>#202020</string>
+                <!--original black background-->
+                <!-- <string>#202020</string> -->
+
+                <!--lighter black background-->
+                <string>#2c2c33</string>
+
                 <key>caret</key>
                 <string>#f8f8f0</string>
                 <key>foreground</key>
