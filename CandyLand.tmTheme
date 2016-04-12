@@ -14,7 +14,16 @@
 			<key>settings</key>
 			<dict>
 				<key>background</key>
-				<string>#CADECA</string>
+				<!--main background for sublime-->
+                <!--light yellow-->
+                <string>#ffffe3</string>
+
+                <!--light green-->
+                <!-- <string>#eaffd4</string> -->
+
+                <!--light blue-->
+                <!-- <string>#ddeeff</string> -->
+
 				<key>caret</key>
 				<string>#8BA7A7</string>
 				<key>foreground</key>
