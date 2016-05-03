@@ -124,3 +124,7 @@ function newetldir () {
     ln -s development/database.yml config/database.yml
     git checkout -b $1
 }
+
+function printsysinfo() {
+    /usr/sbin/system_profiler SPHardwareDataType
+}
