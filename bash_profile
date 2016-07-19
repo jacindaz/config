@@ -120,10 +120,10 @@ export PATH
 function newetldir () {
     cd /Users/jacindazhong/src/research_platform/
     git clone git@github.com:patientslikeme/data-warehouse-2.git $1
-    cd /Users/jacindazhong/src/research_platform/$1
+    cd /Users/jacindazhong/src/research_platform/${1}
 
-    ln -s development/application.yml config/application.yml
-    ln -s development/database.yml config/database.yml
+    cp config/application.yml.sample config/application.yml
+    cp config/database.yml.sample config/database.yml
     git checkout -b $1
 }
 
