@@ -6,10 +6,11 @@ source $GITAWAREPROMPT/main.sh
 print_before_the_prompt () {
     git_repo="$(git branch 2> /dev/null| grep \*)"
     git_branch="$(git branch 2> /dev/null| grep \*)"
+    ruby_version="$(rbenv local)"
     if [[ -z "$git_branch" ]]; then
-        printf "\n$txtgrn%s: $txtblu%s $bldpur%s\n$txtrst" "$USER" "$PWD"
+        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s $bldpur%s\n$txtrst" "$USER" "$ruby_version" "$PWD"
     else
-        printf "\n$txtgrn%s: $txtblu%s \n$bldred%s $bldpur%s $txtrst\n" "$USER" "$PWD" "git branch => "  "$git_branch"
+        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s \n$bldred%s $bldpur%s $txtrst\n" "$USER" "$ruby_version" "$PWD" "git branch => "  "$git_branch"
     fi
 }
 
