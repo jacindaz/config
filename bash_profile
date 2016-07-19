@@ -1,4 +1,4 @@
-export PATH=~/bin:$PATH
+export PATH=~/bin:$PATH:$GOPATH/bin
 
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 source $GITAWAREPROMPT/main.sh
@@ -23,6 +23,7 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 export BUNDLER_EDITOR='subl -w'
+export GOPATH=$HOME/Documents/jacinda/gobridge
 
 export ARCHFLAGS="-arch x86_64"
 eval "$(rbenv init -)"
