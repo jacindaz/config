@@ -71,6 +71,9 @@ alias gdhh='git diff HEAD^ HEAD'
 alias gdc='git diff --cached'
 alias gd='git diff'
 
+# ADD THIS LATER, ALIAS TO BUNDLER GITHUB CLONE
+# alias dbundle='BUNDLE_DISABLE_POSTIT=1 ruby -I /path/to/bundler/lib /path/to/bundler/exe/bundle'
+
 # Rails
 alias rcs='rails console --sandbox'
 alias rs='rails server'
