@@ -131,6 +131,23 @@ function newetldir () {
     git checkout -b $1
 }
 
+function downloadetldb () {
+    echo "Remember to connect to dallas VPN..."
+    NOW=$(date +'%Y%m%d')
+
+    SOURCE_DEVELOPER_DB="developer_db"
+    DEV_DB_DUMPING_GROUND="db-dumps/${SOURCE_DEVELOPER_DB}_${NOW}.pgdump"
+
+    echo "Grabbing ${SOURCE_DEVELOPER_DB}.pgdump, and saving to ${DEV_DB_DUMPING_GROUND}"
+    rsync -P --rsh=ssh "source database dump" ~/${DEV_DB_DUMPING_GROUND}
+
+    SOURCE_PATIENT_BASE_SAMPLE="patient_base_sanitized.pgdump"
+    PB_SANITIZED_DUMPING_GROUND="db-dumps/${SOURCE_PATIENT_BASE_SAMPLE}_${NOW}"
+
+    echo "Grabbing ${SOURCE_PATIENT_BASE_SAMPLE}.pgdump, and saving to ${PB_SANITIZED_DUMPING_GROUND}"
+    rsync -P --rsh=ssh "source data dump" ~/${PB_SANITIZED_DUMPING_GROUND}
+}
+
 function printsysinfo() {
     /usr/sbin/system_profiler SPHardwareDataType
 }
