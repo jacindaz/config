@@ -163,6 +163,46 @@ function restoreetldb() {
     echo "Done restoring ${PATIENT_BASE}........."
 }
 
+function resetplmdb {
+    echo "NOTE: make sure to run this in a rails repo\n"
+
+    echo "Dropping plm_current..."
+    dropdb -U postgres plm_current
+
+    echo "Creating plm_current..."
+    createdb -U postgres -T plm_current_clean_snapshot plm_current
+
+    echo "rake db:migrate..."
+    bundle exec rake db:migrate
+
+    echo "Creating users..."
+    bundle exec rake plm:users:create_all
+  }
+
+function fetchplmdb {
+    echo "Fetching latest dev db to ~/db_dumps ..."
+    rsync -P --rsh=ssh "source database dump"p ~/db-dumps/plm_current_clean_snapshot.pgdump.$(date +%Y%m%d)
+
+    echo "Dropping plm_current..."
+    dropdb plm_current
+
+    echo "Creating plm_current..."
+    createdb plm_current
+
+    echo "Restoring plm_current from pgdump..."
+    pg_restore -d plm_current ~/db-dumps/plm_current_clean_snapshot.pgdump.$(date +%Y%m%d) -j6
+
+    echo "Pull in plm-site current"
+    cd /Users/jacindazhong/src/plm/current
+    git checkout current
+    git pull --rebase
+
+    echo "Running migrations..."
+    bundle install
+    bundle exec rake db:migrate
+}
+
+
 function printsysinfo() {
     /usr/sbin/system_profiler SPHardwareDataType
 }
