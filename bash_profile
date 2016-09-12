@@ -10,11 +10,11 @@ print_before_the_prompt () {
 
     # neither git branch nor ruby version
     if [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
-        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s $bldpur%s\n$txtrst" "$USER" "$PWD"
+        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldpur%s" "$USER" "$PWD"
 
     # git branch but no ruby version
     elif [[ ! -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
-        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s $bldpur%s\n$txtrst" "$USER" "$PWD" "git branch => "  "$git_branch"
+        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst" "$USER" "$PWD" "git branch => "  "$git_branch"
 
     elif [[ -z "$git_branch" ]] && [[ ! -z "$ruby_version" ]]; then
     # ruby version but no git branch
