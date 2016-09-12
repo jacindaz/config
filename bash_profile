@@ -148,6 +148,21 @@ function downloadetldb () {
     rsync -P --rsh=ssh "source data dump" ~/${PB_SANITIZED_DUMPING_GROUND}
 }
 
+function restoreetldb() {
+    NOW=$(date +'%Y%m13')
+    PATIENT_BASE="patient_base_${NOW}"
+
+    createdb $PATIENT_BASE
+    echo "Created ${PATIENT_BASE} database........."
+
+    # FOR FUN - HOW TO IMPLEMENT SOME KIND OF PROGRESS INDICATOR HERE ???
+    pg_restore -d $PATIENT_BASE -j6 ~/"db-dumps/developer_db_${NOW}.pgdump"
+    echo "Done restoring developer_db........."
+
+    pg_restore -d $PATIENT_BASE -j6 ~/"db-dumps/patient_base_sanitized_db_${NOW}.pgdump"
+    echo "Done restoring ${PATIENT_BASE}........."
+}
+
 function printsysinfo() {
     /usr/sbin/system_profiler SPHardwareDataType
 }
