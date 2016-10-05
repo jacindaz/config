@@ -960,6 +960,14 @@ function delta(currentCount, previousCount) {
     return formatted_delta;
 }
 
+shellHelper.collectionsZeroDocs = function () {
+    collectionNames = db.getCollectionNames().filter(function(collection) {
+        if(db.getCollection(collection).count() == 0) { return collection; }
+    });
+
+    print(colorizeAll(collectionNames, mongo_hacker_config['colors']['collectionNames']));
+}
+
 // global variable (to ensure "persistence" of document counts)
 shellHelper.previousDocumentCount = {};
 
