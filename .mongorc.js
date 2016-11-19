@@ -960,14 +960,6 @@ function delta(currentCount, previousCount) {
     return formatted_delta;
 }
 
-shellHelper.collectionsZeroDocs = function () {
-    collectionNames = db.getCollectionNames().filter(function(collection) {
-        if(db.getCollection(collection).count() == 0) { return collection; }
-    });
-
-    print(colorizeAll(collectionNames, mongo_hacker_config['colors']['collectionNames']));
-}
-
 // global variable (to ensure "persistence" of document counts)
 shellHelper.previousDocumentCount = {};
 
@@ -1009,7 +1001,6 @@ shellHelper.count = function (what) {
             // format the delta since last count
             return delta(current, previous);
         });
-
         collectionNames = colorizeAll(collectionNames, mongo_hacker_config['colors']['collectionNames']);
         if (mongo_hacker_config['count_deltas']) {
             printPaddedColumns(collectionNames, documentCounts, deltaCounts);
@@ -1746,3 +1737,26 @@ DB.prototype._getExtraInfo = function(action) {
         print(info);
     }
 };
+
+// JACINDA'S FUNCTIONS ==========================
+shellHelper.collectionsZeroDocs = function () {
+    collectionNames = db.getCollectionNames().filter(function(collection) {
+        if(db.getCollection(collection).count() == 0) { return collection; }
+    });
+
+    print(colorizeAll(collectionNames, mongo_hacker_config['colors']['collectionNames']));
+}
+
+function convertUTCDateToPacificDate(date) {
+    var millisecondsNow = date.getTime();
+    var millisecondsPacific = millisecondsNow-(480*60*1000);
+
+    return new Date(millisecondsPacific);
+}
+
+function addDays(date, days) {
+  var daysMilliseconds = days * 24 * 60 * 60 * 1000;
+  var oldDateMilliseconds = date.getTime();
+
+  return new Date(oldDateMilliseconds + daysMilliseconds);
+}
