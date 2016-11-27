@@ -17,7 +17,7 @@ export PATH=~/bin:$PATH:$GOPATH/bin
 print_before_the_prompt () {
     git_repo="$(git branch 2> /dev/null| grep \*)"
     git_branch="$(git branch 2> /dev/null| grep \*)"
-    ruby_version="$(rbenv local)"
+    ruby_version="$(rbenv local 2> /dev/null| grep \*)"
     go_version="$(go version)"
 
     if [[ "$PWD" =~ "go_workspace" ]]; then
