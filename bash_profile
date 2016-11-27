@@ -1,28 +1,42 @@
 export PATH=~/bin:$PATH:$GOPATH/bin
 
-export GITAWAREPROMPT=~/.bash/git-aware-prompt
-source $GITAWAREPROMPT/main.sh
+# Andrew's bash prompt:
+# function store_exit_code() {
+#   EXIT_CODE=$?
+# }
+
+# function exit_code() {
+#   [[ "$EXIT_CODE" = "0" ]] && return
+#   echo -n "$EXIT_CODE "
+# }
+
+# PROMPT_COMMAND="store_exit_code; $PROMPT_COMMAND"
+
+# export PS1="\[\033[1;34m\][\$(date +%H:%M)] \[\033[1;36m\]\u@\h \w \$(git_branch_string)\[\033[1;31m\]\$(exit_code)\[\033[1;36m\]$\[\033[0m\] "
 
 print_before_the_prompt () {
     git_repo="$(git branch 2> /dev/null| grep \*)"
     git_branch="$(git branch 2> /dev/null| grep \*)"
     ruby_version="$(rbenv local)"
+    go_version="$(go version)"
 
+    if [[ "$PWD" =~ "go_workspace" ]]; then
+        printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$go_version" "$PWD" "git branch => "  "$git_branch"
     # neither git branch nor ruby version
-    if [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
-        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldpur%s" "$USER" "$PWD"
+    elif [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
+        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
 
     # git branch but no ruby version
     elif [[ ! -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
-        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst" "$USER" "$PWD" "git branch => "  "$git_branch"
+        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$PWD" "git branch => "  "$git_branch"
 
     elif [[ -z "$git_branch" ]] && [[ ! -z "$ruby_version" ]]; then
     # ruby version but no git branch
-        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s\n$txtrst" "$USER" "$ruby_version" "$PWD"
+        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD"
 
     # if there is a git branch and a ruby version
     else
-        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst" "$USER" "$ruby_version" "$PWD" "git branch => "  "$git_branch"
+        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD" "git branch => "  "$git_branch"
     fi
 }
 
@@ -35,53 +49,38 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 export BUNDLER_EDITOR='subl -w'
-export GOPATH=$HOME/Documents/jacinda/gobridge
+export GOPATH=$HOME/Documents/jacinda/go_workspace
 
 export ARCHFLAGS="-arch x86_64"
 eval "$(rbenv init -)"
-eval "$(docker-machine env default)"
 
-# CD into a Directory
-alias bp='vim ~/.bash_profile'
 alias jz='cd ~/Documents/jacinda'
-alias plmsite='cd ~/src/plm'
-alias ore='cd ~/src/open-pro'
-alias rp='cd ~/src/research_portal'
-alias dw2='cd ~/src/data-warehouse-2'
-
-alias master='cd ~/src/plm/master'
-alias bugs='cd ~/src/plm/bugs'
-alias gxd='gitx --diff'
-alias current='cd ~/src/plm/current'
+alias lu='cd ~/Documents/learnup'
+alias master='cd ~/Documents/learnup/learnup_master'
+alias etlgo='cd ~/Documents/jacinda/go_workspace/src/github.com/jacinda/etl'
+alias gowrk='cd ~/Documents/jacinda/go_workspace'
 
 alias openemail='open -a Google\ Chrome https://mail.google.com/mail/u/0/#inbox https://calendar.google.com/calendar/render?tab=mc#main_7 https://patientslikeme.slack.com/messages/thepit/ https://mail.google.com/mail/u/1/#inbox https://calendar.google.com/calendar/b/1/render?tab=mc#main_7 '
 
 # Git
+alias gas='git add . && git status'
 alias gs='git status'
 alias gc='git commit'
 alias gcm='git commit -m'
-alias gp='git pull'
-alias gf='git fetch'
-alias gfa='git fetch --all'
 alias gdno='git diff --name-only --diff-filter=U'
 alias gpoh='git push origin head'
 alias branchdiff='git config --global --add alias.branchdiff-files "log --left-right --cherry-pick —stat"'
 alias gpr='git pull --rebase'
 alias gls='git log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --graph'
-alias gpl='git pull'
 alias gplr='git pull --rebase'
-alias gas='git add . && git status'
 alias gbd='git branch -D'
 alias gb='git branch'
-alias gpu='git push'
-alias gch='git checkout HEAD'
 alias gco='git checkout'
 alias gr='git reset'
 alias ga='git add'
-alias gdhh='git diff HEAD^ HEAD'
 alias gdc='git diff --cached'
 alias gd='git diff'
-
+alias sshprodrep='ssh ubuntu@54.204.18.255'
 # ADD THIS LATER, ALIAS TO BUNDLER GITHUB CLONE
 # alias dbundle='BUNDLE_DISABLE_POSTIT=1 ruby -I /path/to/bundler/lib /path/to/bundler/exe/bundle'
 
@@ -93,6 +92,8 @@ alias brs='bundle && rails server'
 alias hr='heroku run'
 alias dcms='rake db:drop && rake db:create && rake db:migrate && rake db:seed'
 
+bld_navy='\e[1;18m'
+txt_navy='\e[18m'
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
 txtgrn='\e[0;32m' # Green
@@ -217,3 +218,4 @@ function fetchplmdb {
 function printsysinfo() {
     /usr/sbin/system_profiler SPHardwareDataType
 }
+export PATH="$HOME/.rbenv/bin:$PATH"
