@@ -15,7 +15,6 @@ export PATH=~/bin:$PATH:$GOPATH/bin
 # export PS1="\[\033[1;34m\][\$(date +%H:%M)] \[\033[1;36m\]\u@\h \w \$(git_branch_string)\[\033[1;31m\]\$(exit_code)\[\033[1;36m\]$\[\033[0m\] "
 
 print_before_the_prompt () {
-    git_repo="$(git branch 2> /dev/null| grep \*)"
     git_branch="$(git branch 2> /dev/null| grep \*)"
     go_version="$(go version)"
 
@@ -38,7 +37,12 @@ print_before_the_prompt () {
     # printf "rbenv_local_version: %s\n" "$rbenv_local_version"
 
     if [[ "$PWD" =~ "go_workspace" ]]; then
-        printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$go_version" "$PWD" "git branch => "  "$git_branch"
+
+        if [[ -z "$git_branch" ]]; then
+            printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$go_version" "$PWD" "git branch => "  "<git not configured>"
+        else
+            printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$go_version" "$PWD" "git branch => "  "$git_branch"
+        fi
 
     elif [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
         # printf "\nNeither git branch nor ruby version if clause.\n"
