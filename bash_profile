@@ -17,25 +17,43 @@ export PATH=~/bin:$PATH:$GOPATH/bin
 print_before_the_prompt () {
     git_repo="$(git branch 2> /dev/null| grep \*)"
     git_branch="$(git branch 2> /dev/null| grep \*)"
-    ruby_version="$(rbenv local 2> /dev/null| grep \*)"
     go_version="$(go version)"
+
+    # -z: checks is_empty_string?, returns boolean
+    # -z "" => true
+    # -z "some string" => false
+
+    rbenv_local_version="$(rbenv local 2>/dev/null)"
+    rbenv_global_version="$(rbenv global 2>/dev/null)"
+
+    # if rbenv local doesn't exist, try global
+    if [[ -z "$rbenv_local_version" ]]; then
+        ruby_version="$rbenv_global_version"
+    else
+        ruby_version="$rbenv_local_version"
+    fi
+
+    # debugging print statements
+    # printf "\nrbenv_global_version: %s\n" "$rbenv_global_version"
+    # printf "rbenv_local_version: %s\n" "$rbenv_local_version"
 
     if [[ "$PWD" =~ "go_workspace" ]]; then
         printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$go_version" "$PWD" "git branch => "  "$git_branch"
-    # neither git branch nor ruby version
+
     elif [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
+        # printf "\nNeither git branch nor ruby version if clause.\n"
         printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
 
-    # git branch but no ruby version
-    elif [[ ! -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
+    elif [[ ! -z "$git_branch" ]] && [[ -z "$rbenv_global_version" ]]; then
+        # printf "\nGit branch but no ruby version if clause.\n"
         printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$PWD" "git branch => "  "$git_branch"
 
     elif [[ -z "$git_branch" ]] && [[ ! -z "$ruby_version" ]]; then
-    # ruby version but no git branch
+        # printf "\nRuby version but no git branch if clause.\n"
         printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD"
 
-    # if there is a git branch and a ruby version
     else
+        # printf "\nGit branch AND ruby version exists if clause.\n"
         printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD" "git branch => "  "$git_branch"
     fi
 }
