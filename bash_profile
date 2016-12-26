@@ -81,8 +81,10 @@ alias lu='cd ~/Documents/learnup'
 alias master='cd ~/Documents/learnup/learnup_master'
 alias etlgo='cd ~/Documents/jacinda/go_workspace/src/github.com/jacinda/etl'
 alias gowrk='cd ~/Documents/jacinda/go_workspace'
+alias dw='pgcli -d mongoprod -p 5439 -h fivetran-redshift.cudfn3rzdvdf.us-east-1.redshift.amazonaws.com --user jacinda'
+alias fp='cd /Users/jacindazhong/Documents/jacinda/friendly-potato'
 
-alias openemail='open -a Google\ Chrome https://mail.google.com/mail/u/0/#inbox https://calendar.google.com/calendar/render?tab=mc#main_7 https://patientslikeme.slack.com/messages/thepit/ https://mail.google.com/mail/u/1/#inbox https://calendar.google.com/calendar/b/1/render?tab=mc#main_7 '
+alias openemail='open -a Google\ Chrome https://mail.google.com/mail/u/1/#inbox https://calendar.google.com/calendar/b/1/render?tab=mc#main_7 https://mail.google.com/mail/u/0/#inbox https://calendar.google.com/calendar/render?tab=mc#main_7'
 
 # Git
 alias gas='git add . && git status'
@@ -113,6 +115,10 @@ alias rc='rails console'
 alias brs='bundle && rails server'
 alias hr='heroku run'
 alias dcms='rake db:drop && rake db:create && rake db:migrate && rake db:seed'
+alias be='bundle exec'
+
+# LearnUp
+alias import_prod_and_crr=''
 
 bld_navy='\e[1;18m'
 txt_navy='\e[18m'
@@ -155,89 +161,9 @@ txtrst='\e[0m'    # Text Reset
 PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 export PATH
 
-function newetldir () {
-    cd /Users/jacindazhong/src/research_platform/
-    git clone git@github.com:patientslikeme/data-warehouse-2.git $1
-    cd /Users/jacindazhong/src/research_platform/${1}
-
-    cp config/application.yml.sample config/application.yml
-    cp config/database.yml.sample config/database.yml
-    git checkout -b $1
-}
-
-function downloadetldb () {
-    echo "Remember to connect to dallas VPN..."
-    NOW=$(date +'%Y%m%d')
-
-    SOURCE_DEVELOPER_DB="developer_db"
-    DEV_DB_DUMPING_GROUND="db-dumps/${SOURCE_DEVELOPER_DB}_${NOW}.pgdump"
-
-    echo "Grabbing ${SOURCE_DEVELOPER_DB}.pgdump, and saving to ${DEV_DB_DUMPING_GROUND}"
-    rsync -P --rsh=ssh "source database dump" ~/${DEV_DB_DUMPING_GROUND}
-
-    SOURCE_PATIENT_BASE_SAMPLE="patient_base_sanitized.pgdump"
-    PB_SANITIZED_DUMPING_GROUND="db-dumps/${SOURCE_PATIENT_BASE_SAMPLE}_${NOW}"
-
-    echo "Grabbing ${SOURCE_PATIENT_BASE_SAMPLE}.pgdump, and saving to ${PB_SANITIZED_DUMPING_GROUND}"
-    rsync -P --rsh=ssh "source data dump" ~/${PB_SANITIZED_DUMPING_GROUND}
-}
-
-function restoreetldb() {
-    NOW=$(date +'%Y%m13')
-    PATIENT_BASE="patient_base_${NOW}"
-
-    createdb $PATIENT_BASE
-    echo "Created ${PATIENT_BASE} database........."
-
-    # FOR FUN - HOW TO IMPLEMENT SOME KIND OF PROGRESS INDICATOR HERE ???
-    pg_restore -d $PATIENT_BASE -j6 ~/"db-dumps/developer_db_${NOW}.pgdump"
-    echo "Done restoring developer_db........."
-
-    pg_restore -d $PATIENT_BASE -j6 ~/"db-dumps/patient_base_sanitized_db_${NOW}.pgdump"
-    echo "Done restoring ${PATIENT_BASE}........."
-}
-
-function resetplmdb {
-    echo "NOTE: make sure to run this in a rails repo\n"
-
-    echo "Dropping plm_current..."
-    dropdb -U postgres plm_current
-
-    echo "Creating plm_current..."
-    createdb -U postgres -T plm_current_clean_snapshot plm_current
-
-    echo "rake db:migrate..."
-    bundle exec rake db:migrate
-
-    echo "Creating users..."
-    bundle exec rake plm:users:create_all
-  }
-
-function fetchplmdb {
-    echo "Fetching latest dev db to ~/db_dumps ..."
-    rsync -P --rsh=ssh "source database dump"p ~/db-dumps/plm_current_clean_snapshot.pgdump.$(date +%Y%m%d)
-
-    echo "Dropping plm_current..."
-    dropdb plm_current
-
-    echo "Creating plm_current..."
-    createdb plm_current
-
-    echo "Restoring plm_current from pgdump..."
-    pg_restore -d plm_current ~/db-dumps/plm_current_clean_snapshot.pgdump.$(date +%Y%m%d) -j6
-
-    echo "Pull in plm-site current"
-    cd /Users/jacindazhong/src/plm/current
-    git checkout current
-    git pull --rebase
-
-    echo "Running migrations..."
-    bundle install
-    bundle exec rake db:migrate
-}
-
 
 function printsysinfo() {
     /usr/sbin/system_profiler SPHardwareDataType
 }
+export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
