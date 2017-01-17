@@ -1,0 +1,27 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+export PATH
+
+print_before_the_prompt () {
+  printf "\n$bldgrn%s $bldpur%s: \n" "$USER" "$PWD"
+}
+
+bldcyn='\e[1;36m'
+bldgrn='\e[1;32m'
+txtgrn='\e[0;32m' # Green
+txt_navy='\e[0;18m' # Navy
+txt_cyn='\e[0;36m' # Cyan
+bld_navy='\e[1;18m'
+bldpur='\e[1;35m' # Purple
+
+PROMPT_COMMAND=print_before_the_prompt
+PS1="${txt_cyn}\u@ \h \w${txt_navy}>>>> "
