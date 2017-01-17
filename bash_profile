@@ -1,52 +1,127 @@
-export PATH=~/bin:$PATH
+export PATH=~/bin:$PATH:$GOPATH/bin
 
-export GITAWAREPROMPT=~/.bash/git-aware-prompt
-source $GITAWAREPROMPT/main.sh
+# Andrew's bash prompt:
+# function store_exit_code() {
+#   EXIT_CODE=$?
+# }
+
+# function exit_code() {
+#   [[ "$EXIT_CODE" = "0" ]] && return
+#   echo -n "$EXIT_CODE "
+# }
+
+# PROMPT_COMMAND="store_exit_code; $PROMPT_COMMAND"
+
+# export PS1="\[\033[1;34m\][\$(date +%H:%M)] \[\033[1;36m\]\u@\h \w \$(git_branch_string)\[\033[1;31m\]\$(exit_code)\[\033[1;36m\]$\[\033[0m\] "
 
 print_before_the_prompt () {
     git_branch="$(git branch 2> /dev/null| grep \*)"
-    if [[ -z "$git_branch" ]]; then
-        printf "$txtgrn%s: $bldblu%s $bldpur%s\n$txtrst" "$USER" "$PWD"
+    go_version="$(go version)"
+
+    # -z: checks is_empty_string?, returns boolean
+    # -z "" => true
+    # -z "some string" => false
+
+    rbenv_local_version="$(rbenv local 2>/dev/null)"
+    rbenv_global_version="$(rbenv global 2>/dev/null)"
+
+    # if rbenv local doesn't exist, try global
+    if [[ -z "$rbenv_local_version" ]]; then
+        ruby_version="$rbenv_global_version"
     else
-        printf "$txtgrn%s: $bldblu%s $undcyn%s $bldpur%s \n$txtrst" "$USER" "$PWD" "(git)"  "$git_branch"
+        ruby_version="$rbenv_local_version"
+    fi
+
+    # debugging print statements
+    # printf "\nrbenv_global_version: %s\n" "$rbenv_global_version"
+    # printf "rbenv_local_version: %s\n" "$rbenv_local_version"
+
+    if [[ "$PWD" =~ "go_workspace" ]]; then
+
+        if [[ -z "$git_branch" ]]; then
+            printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$go_version" "$PWD" "git branch => "  "<git not configured>"
+        else
+            printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$go_version" "$PWD" "git branch => "  "$git_branch"
+        fi
+
+    elif [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
+        # printf "\nNeither git branch nor ruby version if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
+
+    elif [[ ! -z "$git_branch" ]] && [[ -z "$rbenv_global_version" ]]; then
+        # printf "\nGit branch but no ruby version if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$PWD" "git branch => "  "$git_branch"
+
+    elif [[ -z "$git_branch" ]] && [[ ! -z "$ruby_version" ]]; then
+        # printf "\nRuby version but no git branch if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD"
+
+    else
+        # printf "\nGit branch AND ruby version exists if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD" "git branch => "  "$git_branch"
     fi
 }
 
 PROMPT_COMMAND=print_before_the_prompt
-PS1='>>> '
+PS1='>>>> '
 
 export RUBY_GC_HEAP_INIT_SLOTS=1000000
 export RUBY_HEAP_SLOTS_INCREMENT=1000000
 export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
+export BUNDLER_EDITOR='subl -w'
+export GOPATH=$HOME/Documents/jacinda/go_workspace
+
 export ARCHFLAGS="-arch x86_64"
 eval "$(rbenv init -)"
 
-# CD into a Directory
-alias bp='vim ~/.bash_profile'
 alias jz='cd ~/Documents/jacinda'
-alias plmsite='cd ~/src/plm'
-alias edx='cd ~/Documents/jacinda/6\.00\.2x'
-alias testfiles='cd ~/Documents/test_files'
-alias bugs='cd ~/src/plm/bugs'
-alias rp='cd ~/src/research-portal'
-alias gxd='gitx --diff'
+alias lu='cd ~/Documents/learnup'
+alias master='cd ~/Documents/learnup/learnup_master'
+alias etlgo='cd ~/Documents/jacinda/go_workspace/src/github.com/jacinda/etl'
+alias gowrk='cd ~/Documents/jacinda/go_workspace'
+alias dw='pgcli -d mongoprod -p 5439 -h fivetran-redshift.cudfn3rzdvdf.us-east-1.redshift.amazonaws.com --user jacinda'
+alias fp='cd /Users/jacindazhong/Documents/jacinda/friendly-potato'
+
+alias openemail='open -a Google\ Chrome https://mail.google.com/mail/u/1/#inbox https://calendar.google.com/calendar/b/1/render?tab=mc#main_7 https://mail.google.com/mail/u/0/#inbox https://calendar.google.com/calendar/render?tab=mc#main_7'
 
 # Git
+alias gas='git add . && git status'
 alias gs='git status'
-alias gss="git status -s"   # displays cleaned up version of git status
 alias gc='git commit'
 alias gcm='git commit -m'
-alias gp='git pull'
-alias gf='git fetch'
-alias gfa='git fetch --all'
+alias gdno='git diff --name-only --diff-filter=U'
+alias gpoh='git push origin head'
+alias branchdiff='git config --global --add alias.branchdiff-files "log --left-right --cherry-pick —stat"'
+alias gpr='git pull --rebase'
+alias gls='git log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --graph'
+alias gplr='git pull --rebase'
+alias gbd='git branch -D'
+alias gb='git branch'
+alias gco='git checkout'
+alias gr='git reset'
+alias ga='git add'
+alias gdc='git diff --cached'
+alias gd='git diff'
+alias sshprodrep='ssh ubuntu@54.204.18.255'
+# ADD THIS LATER, ALIAS TO BUNDLER GITHUB CLONE
+# alias dbundle='BUNDLE_DISABLE_POSTIT=1 ruby -I /path/to/bundler/lib /path/to/bundler/exe/bundle'
 
 # Rails
 alias rcs='rails console --sandbox'
 alias rs='rails server'
+alias rc='rails console'
 alias brs='bundle && rails server'
+alias hr='heroku run'
+alias dcms='rake db:drop && rake db:create && rake db:migrate && rake db:seed'
+alias be='bundle exec'
 
+# LearnUp
+alias import_prod_and_crr=''
+
+bld_navy='\e[1;18m'
+txt_navy='\e[18m'
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
 txtgrn='\e[0;32m' # Green
@@ -80,3 +155,15 @@ bakpur='\e[45m'   # Purple
 bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
+
+# Setting PATH for Python 2.7
+# The orginal version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+export PATH
+
+
+function printsysinfo() {
+    /usr/sbin/system_profiler SPHardwareDataType
+}
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"

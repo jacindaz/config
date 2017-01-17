@@ -1,9 +1,14 @@
 {
 	"bold_folder_labels": true,
-	"caret_style": "underline",
-	"color_scheme": "Packages/Colorsublime-Themes/Bittersweet.tmTheme",
+	"caret_style": "phase",
+	"color_scheme": "Packages/Dark-Dracula.tmTheme",
+	"draw_indent_guides": true,
+	"ensure_newline_at_eof_on_save": true,
+	"fade_fold_buttons": false,
+	"find_selected_text": true,
 	"font_face": "Consolas",
 	"font_size": 18.0,
+	"hide_minimap": true,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
@@ -11,10 +16,14 @@
 		"Vintage"
 	],
 	"line_numbers": true,
+	"save_on_focus_list": true,
+	"scroll_past_end": true,
+	"show_full_path": true,
 	"show_minimap": false,
 	"theme": "Soda Light.sublime-theme",
-	
-	"translate_tabs_to_spaces": false,  // if you have this set to 'true', will make sublime crash
+	"translate_tabs_to_spaces": true,
+	"trim_automatic_white_space": true,
+	"trim_trailing_white_space_on_save": true,
 	"wide_caret": true,
 	"word_wrap": true
 }

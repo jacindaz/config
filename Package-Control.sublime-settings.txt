@@ -1,0 +1,26 @@
+{
+	"in_process_packages":
+	[
+	],
+	"installed_dependencies":
+	[
+		"0_package_control_loader",
+		"bz2"
+	],
+	"installed_packages":
+	[
+		"Better CoffeeScript",
+		"BracketHighlighter",
+		"CoffeeScript",
+                // "Focus File on Sidebar", never use this, makes Sublime crash 
+		"Git",
+		"GitGutter",
+		"Haml",
+		"Package Control",
+		"SCSS",
+		"Theme - Soda",
+		"Theme - Soda SolarizedDark",
+		"Theme - Sodarized"
+	]
+}
+
