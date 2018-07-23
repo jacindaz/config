@@ -1,74 +1,21 @@
-export PATH=~/bin:$PATH:$GOPATH/bin
-
-# Andrew's bash prompt:
-# function store_exit_code() {
-#   EXIT_CODE=$?
-# }
-
-# function exit_code() {
-#   [[ "$EXIT_CODE" = "0" ]] && return
-#   echo -n "$EXIT_CODE "
-# }
-
-# PROMPT_COMMAND="store_exit_code; $PROMPT_COMMAND"
-
-# export PS1="\[\033[1;34m\][\$(date +%H:%M)] \[\033[1;36m\]\u@\h \w \$(git_branch_string)\[\033[1;31m\]\$(exit_code)\[\033[1;36m\]$\[\033[0m\] "
+source ~/.bashrc
+source ~/.cloverhealthrc
 
 print_before_the_prompt () {
     git_branch="$(git branch 2> /dev/null| grep \*)"
+    python_version="$(python -V 2>/dev/null)"
 
-    # -z: checks is_empty_string?, returns boolean
-    # -z "" => true
-    # -z "some string" => false
-
-    rbenv_local_version="$(rbenv local 2>/dev/null)"
-    rbenv_global_version="$(rbenv global 2>/dev/null)"
-
-    # if rbenv local doesn't exist, try global
-    if [[ -z "$rbenv_local_version" ]]; then
-        ruby_version="$rbenv_global_version"
+    if [[ -z "$git_branch" ]] && [[ -z "$python_version" ]]; then
+        printf "\n$txtgrn%s $bldcyn(python not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
+    elif [[ -z "$git_branch" ]] && [[ ! -z "$python_version" ]]; then
+        printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$python_version" "$PWD"
     else
-        ruby_version="$rbenv_local_version"
-    fi
-
-    # debugging print statements
-    # printf "\nrbenv_global_version: %s\n" "$rbenv_global_version"
-    # printf "rbenv_local_version: %s\n" "$rbenv_local_version"
-
-    if [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
-        # printf "\nNeither git branch nor ruby version if clause.\n"
-        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
-
-    elif [[ ! -z "$git_branch" ]] && [[ -z "$rbenv_global_version" ]]; then
-        # printf "\nGit branch but no ruby version if clause.\n"
-        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$PWD" "git branch => "  "$git_branch"
-
-    elif [[ -z "$git_branch" ]] && [[ ! -z "$ruby_version" ]]; then
-        # printf "\nRuby version but no git branch if clause.\n"
-        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD"
-
-    else
-        # printf "\nGit branch AND ruby version exists if clause.\n"
-        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD" "git branch => "  "$git_branch"
+        printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$python_version" "$PWD" "git branch => "  "$git_branch"
     fi
 }
 
 PROMPT_COMMAND=print_before_the_prompt
 PS1='>>>> '
-
-export RUBY_GC_HEAP_INIT_SLOTS=1000000
-export RUBY_HEAP_SLOTS_INCREMENT=1000000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=1000000000
-export RUBY_HEAP_FREE_MIN=500000
-export BUNDLER_EDITOR='subl -w'
-
-export ARCHFLAGS="-arch x86_64"
-eval "$(rbenv init -)"
-
-alias jz='cd ~/Documents/Programming'
-alias config='cd /Users/jacinda/Documents/Programming/config'
-
 
 # Git
 alias gas='git add . && git status'
@@ -84,13 +31,27 @@ alias ga='git add'
 alias gdc='git diff --cached'
 alias gd='git diff'
 
-# Rails
-alias rcs='bin/rails console --sandbox'
-alias rs='bin/rails server'
-alias rc='bin/rails console'
-alias brs='bundle && bin/rails server'
-alias be='bundle exec'
-alias sfp='cd /Users/jacinda/Documents/Programming/sf_police_data'
+alias clp='cd /Users/jacinda.zhong/Documents/clover_pipeline'
+alias clm='cd /Users/jacinda.zhong/Documents/clover-monitoring'
+
+alias bart='cd /Users/jacinda.zhong/Documents/jacinda/airflow_bart2'
+alias config='cd /Users/jacinda.zhong/Documents/jacinda/config'
+
+# This tells the ls command to always use colored output,
+# making it easier to tell the different types of things it's listing.
+export CLICOLOR=1
+
+# The Bash command line stores a history of commands you've typed, which is useful
+# -- you can search through it to find a command you once used but forgot
+# (you can press the up-arrow key at a command prompt to go through your command
+# history one item at a time, or press Ctrl+r to trigger a search). However, if
+# you type certain commands over and over (like ls or git status), they generate
+# one history entry each time you type them. The above setting will prune out duplicate entries,
+# making it easier to go back through your command history.
+export HISTCONTROL=ignoreboth:erasedups
+
+export VISUAL=vim
+
 
 bld_navy='\e[1;18m'
 txt_navy='\e[18m'
@@ -128,100 +89,51 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
-# Setting PATH for Python 2.7
-# The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
-export PATH
-
-
-function printsysinfo() {
-    /usr/sbin/system_profiler SPHardwareDataType
-}
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
-
-function newetldir () {
-    cd /Users/jacindazhong/src/research_platform/
-    git clone git@github.com:patientslikeme/data-warehouse-2.git $1
-    cd /Users/jacindazhong/src/research_platform/${1}
-
-    cp config/application.yml.sample config/application.yml
-    cp config/database.yml.sample config/database.yml
-    git checkout -b $1
-}
-
-function downloadetldb () {
-    echo "Remember to connect to dallas VPN..."
-    NOW=$(date +'%Y%m%d')
-
-    SOURCE_DEVELOPER_DB="developer_db"
-    DEV_DB_DUMPING_GROUND="db-dumps/${SOURCE_DEVELOPER_DB}_${NOW}.pgdump"
-
-    echo "Grabbing ${SOURCE_DEVELOPER_DB}.pgdump, and saving to ${DEV_DB_DUMPING_GROUND}"
-    rsync -P --rsh=ssh "source database dump" ~/${DEV_DB_DUMPING_GROUND}
-
-    SOURCE_PATIENT_BASE_SAMPLE="patient_base_sanitized.pgdump"
-    PB_SANITIZED_DUMPING_GROUND="db-dumps/${SOURCE_PATIENT_BASE_SAMPLE}_${NOW}"
-
-    echo "Grabbing ${SOURCE_PATIENT_BASE_SAMPLE}.pgdump, and saving to ${PB_SANITIZED_DUMPING_GROUND}"
-    rsync -P --rsh=ssh "source data dump" ~/${PB_SANITIZED_DUMPING_GROUND}
-}
-
-function restoreetldb() {
-    NOW=$(date +'%Y%m13')
-    PATIENT_BASE="patient_base_${NOW}"
-
-    createdb $PATIENT_BASE
-    echo "Created ${PATIENT_BASE} database........."
-
-    # FOR FUN - HOW TO IMPLEMENT SOME KIND OF PROGRESS INDICATOR HERE ???
-    pg_restore -d $PATIENT_BASE -j6 ~/"db-dumps/developer_db_${NOW}.pgdump"
-    echo "Done restoring developer_db........."
-
-    pg_restore -d $PATIENT_BASE -j6 ~/"db-dumps/patient_base_sanitized_db_${NOW}.pgdump"
-    echo "Done restoring ${PATIENT_BASE}........."
-}
-
-function resetplmdb {
-    echo "NOTE: make sure to run this in a rails repo\n"
-
-    echo "Dropping plm_current..."
-    dropdb -U postgres plm_current
-
-    echo "Creating plm_current..."
-    createdb -U postgres -T plm_current_clean_snapshot plm_current
-
-    echo "rake db:migrate..."
-    bundle exec rake db:migrate
-
-    echo "Creating users..."
-    bundle exec rake plm:users:create_all
-  }
-
-function fetchplmdb {
-    echo "Fetching latest dev db to ~/db_dumps ..."
-    rsync -P --rsh=ssh "source database dump"p ~/db-dumps/plm_current_clean_snapshot.pgdump.$(date +%Y%m%d)
-
-    echo "Dropping plm_current..."
-    dropdb plm_current
-
-    echo "Creating plm_current..."
-    createdb plm_current
-
-    echo "Restoring plm_current from pgdump..."
-    pg_restore -d plm_current ~/db-dumps/plm_current_clean_snapshot.pgdump.$(date +%Y%m%d) -j6
-
-    echo "Pull in plm-site current"
-    cd /Users/jacindazhong/src/plm/current
-    git checkout current
-    git pull --rebase
-
-    echo "Running migrations..."
-    bundle install
-    bundle exec rake db:migrate
+export JACINDA_AIRFLOW=/Users/jacinda.zhong/jacinda_airflow
+swap_personal_airflow()
+{
+  echo "Previous AIRFLOW_HOME: $AIRFLOW_HOME"
+  export AIRFLOW_HOME=$JACINDA_AIRFLOW
+  echo "Swapped! AIRFLOW_HOME is now: $AIRFLOW_HOME"
 }
 
 
-function printsysinfo() {
-    /usr/sbin/system_profiler SPHardwareDataType
+# =========== OLD PROMPT FOR RUBY ==================
+old_ruby_prompt () {
+    git_branch="$(git branch 2> /dev/null| grep \*)"
+
+    # -z: checks is_empty_string?, returns boolean
+    # -z "" => true
+    # -z "some string" => false
+
+    rbenv_local_version="$(rbenv local 2>/dev/null)"
+    rbenv_global_version="$(rbenv global 2>/dev/null)"
+
+    # if rbenv local doesn't exist, try global
+    if [[ -z "$rbenv_local_version" ]]; then
+        ruby_version="$rbenv_global_version"
+    else
+        ruby_version="$rbenv_local_version"
+    fi
+
+    # debugging print statements
+    # printf "\nrbenv_global_version: %s\n" "$rbenv_global_version"
+    # printf "rbenv_local_version: %s\n" "$rbenv_local_version"
+
+    if [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
+        # printf "\nNeither git branch nor ruby version if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
+
+    elif [[ ! -z "$git_branch" ]] && [[ -z "$rbenv_global_version" ]]; then
+        # printf "\nGit branch but no ruby version if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$PWD" "git branch => "  "$git_branch"
+
+    elif [[ -z "$git_branch" ]] && [[ ! -z "$ruby_version" ]]; then
+        # printf "\nRuby version but no git branch if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD"
+
+    else
+        # printf "\nGit branch AND ruby version exists if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD" "git branch => "  "$git_branch"
+    fi
 }
