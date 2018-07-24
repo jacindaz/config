@@ -3,13 +3,23 @@ source ~/.cloverhealthrc
 
 print_before_the_prompt () {
     git_branch="$(git branch 2> /dev/null| grep \*)"
+
+    # -z: checks is_empty_string?, returns boolean
+    # -z "" => true
+    # -z "some string" => false
+
     python_version="$(python -V 2>/dev/null)"
 
     if [[ -z "$git_branch" ]] && [[ -z "$python_version" ]]; then
+        # printf "\nNeither git branch nor ruby version if clause.\n"
         printf "\n$txtgrn%s $bldcyn(python not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
+
     elif [[ -z "$git_branch" ]] && [[ ! -z "$python_version" ]]; then
+        # printf "\nRuby version but no git branch if clause.\n"
         printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$python_version" "$PWD"
+
     else
+        # printf "\nGit branch AND ruby version exists if clause.\n"
         printf "\n$txtgrn%s $bldcyn(%s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$python_version" "$PWD" "git branch => "  "$git_branch"
     fi
 }
@@ -33,8 +43,10 @@ alias gd='git diff'
 
 alias clp='cd /Users/jacinda.zhong/Documents/clover_pipeline'
 alias clm='cd /Users/jacinda.zhong/Documents/clover-monitoring'
+alias clover='cd /Users/jacinda.zhong/Documents/'
+alias jz='cd /Users/jacinda.zhong/Documents/jacinda'
 
-alias bart='cd /Users/jacinda.zhong/Documents/jacinda/airflow_bart2'
+alias bart='cd /Users/jacinda.zhong/Documents/jacinda/airflow_bart'
 alias config='cd /Users/jacinda.zhong/Documents/jacinda/config'
 
 # This tells the ls command to always use colored output,
@@ -97,43 +109,4 @@ swap_personal_airflow()
   echo "Swapped! AIRFLOW_HOME is now: $AIRFLOW_HOME"
 }
 
-
-# =========== OLD PROMPT FOR RUBY ==================
-old_ruby_prompt () {
-    git_branch="$(git branch 2> /dev/null| grep \*)"
-
-    # -z: checks is_empty_string?, returns boolean
-    # -z "" => true
-    # -z "some string" => false
-
-    rbenv_local_version="$(rbenv local 2>/dev/null)"
-    rbenv_global_version="$(rbenv global 2>/dev/null)"
-
-    # if rbenv local doesn't exist, try global
-    if [[ -z "$rbenv_local_version" ]]; then
-        ruby_version="$rbenv_global_version"
-    else
-        ruby_version="$rbenv_local_version"
-    fi
-
-    # debugging print statements
-    # printf "\nrbenv_global_version: %s\n" "$rbenv_global_version"
-    # printf "rbenv_local_version: %s\n" "$rbenv_local_version"
-
-    if [[ -z "$git_branch" ]] && [[ -z "$ruby_version" ]]; then
-        # printf "\nNeither git branch nor ruby version if clause.\n"
-        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
-
-    elif [[ ! -z "$git_branch" ]] && [[ -z "$rbenv_global_version" ]]; then
-        # printf "\nGit branch but no ruby version if clause.\n"
-        printf "\n$txtgrn%s $bldcyn(rbenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$PWD" "git branch => "  "$git_branch"
-
-    elif [[ -z "$git_branch" ]] && [[ ! -z "$ruby_version" ]]; then
-        # printf "\nRuby version but no git branch if clause.\n"
-        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD"
-
-    else
-        # printf "\nGit branch AND ruby version exists if clause.\n"
-        printf "\n$txtgrn%s $bldcyn(ruby %s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$ruby_version" "$PWD" "git branch => "  "$git_branch"
-    fi
-}
+cd '/Users/jacinda.zhong/Documents/clover_pipeline'
