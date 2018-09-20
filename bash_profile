@@ -101,12 +101,17 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
-export JACINDA_AIRFLOW=/Users/jacinda.zhong/jacinda_airflow
-swap_personal_airflow()
+export JACINDA_AIRFLOW=/Users/jacinda.zhong/Documents/jacinda/jacinda_airflow
+export JACINDA_AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://jacinda.zhong@localhost:5432/sf_bart
+swap_airflow()
 {
   echo "Previous AIRFLOW_HOME: $AIRFLOW_HOME"
   export AIRFLOW_HOME=$JACINDA_AIRFLOW
   echo "Swapped! AIRFLOW_HOME is now: $AIRFLOW_HOME"
+
+export AIRFLOW__CORE__SQL_ALCHEMY_CONN=$JACINDA_AIRFLOW__CORE__SQL_ALCHEMY_CONN
 }
 
 cd '/Users/jacinda.zhong/Documents/clover_pipeline'
+
+
