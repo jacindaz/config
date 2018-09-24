@@ -24,7 +24,7 @@ print_before_the_prompt () {
     fi
 }
 
-PROMPT_COMMAND=print_before_the_prompt
+PROMPT_COMMAND="print_before_the_prompt; jacinda_airflow"
 PS1='>>>> '
 
 # Git
@@ -43,10 +43,11 @@ alias gd='git diff'
 
 alias clp='cd /Users/jacinda.zhong/Documents/clover_pipeline'
 alias clm='cd /Users/jacinda.zhong/Documents/clover-monitoring'
+alias db='cd /Users/jacinda.zhong/Documents/data-bodega'
 alias clover='cd /Users/jacinda.zhong/Documents/'
 alias jz='cd /Users/jacinda.zhong/Documents/jacinda'
 
-alias bart='cd /Users/jacinda.zhong/Documents/jacinda/airflow_bart'
+alias bart='cd /Users/jacinda.zhong/Documents/jacinda/jacinda_airflow'
 alias config='cd /Users/jacinda.zhong/Documents/jacinda/config'
 
 # This tells the ls command to always use colored output,
@@ -101,17 +102,22 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
+
 export JACINDA_AIRFLOW=/Users/jacinda.zhong/Documents/jacinda/jacinda_airflow
 export JACINDA_AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://jacinda.zhong@localhost:5432/sf_bart
-swap_airflow()
-{
-  echo "Previous AIRFLOW_HOME: $AIRFLOW_HOME"
-  export AIRFLOW_HOME=$JACINDA_AIRFLOW
-  echo "Swapped! AIRFLOW_HOME is now: $AIRFLOW_HOME"
+jacinda_airflow() {
+  if [ "$(pwd)" = '/Users/jacinda.zhong/Documents/jacinda/jacinda_airflow' ]; then
+    if [ ${AIRFLOW_HOME} != ${JACINDA_AIRFLOW}  ]; then
+      echo "Previous AIRFLOW_HOME: $AIRFLOW_HOME"
+      export AIRFLOW_HOME=$JACINDA_AIRFLOW
+      echo "Swapped! AIRFLOW_HOME is now: $AIRFLOW_HOME"
 
-export AIRFLOW__CORE__SQL_ALCHEMY_CONN=$JACINDA_AIRFLOW__CORE__SQL_ALCHEMY_CONN
+      echo
+      echo "Previous AIRFLOW__CORE__SQL_ALCHEMY_CONN: $AIRFLOW__CORE__SQL_ALCHEMY_CONN"
+      export AIRFLOW__CORE__SQL_ALCHEMY_CONN=$JACINDA_AIRFLOW__CORE__SQL_ALCHEMY_CONN
+      echo "Swapped! AIRFLOW__CORE__SQL_ALCHEMY_CONN is now: $AIRFLOW__CORE__SQL_ALCHEMY_CONN"
+    fi
+  fi
 }
 
 cd '/Users/jacinda.zhong/Documents/clover_pipeline'
-
-
