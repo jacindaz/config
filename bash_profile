@@ -40,6 +40,7 @@ alias gr='git reset'
 alias ga='git add'
 alias gdc='git diff --cached'
 alias gd='git diff'
+alias gbd_all_but_master='git branch | grep -v "master" | xargs git branch -D'
 
 alias clp='cd /Users/jacinda.zhong/Documents/clover_pipeline'
 alias clm='cd /Users/jacinda.zhong/Documents/clover-monitoring'
