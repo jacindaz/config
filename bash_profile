@@ -24,7 +24,42 @@ print_before_the_prompt () {
     fi
 }
 
-PROMPT_COMMAND="print_before_the_prompt; jacinda_airflow"
+python_print_before_the_prompt () {
+    git_branch="$(git branch 2> /dev/null| grep \*)"
+
+    # -z: checks is_empty_string?, returns boolean
+    # -z "" => true
+    # -z "some string" => false
+
+    local_version="$(pyenv local 2>/dev/null)"
+    global_version="$(pyenv global 2>/dev/null)"
+
+    # if pyenv local doesn't exist, try global
+    if [[ -z "$local_version" ]]; then
+        python_version="$global_version"
+    else
+        python_version="$local_version"
+    fi
+
+    if [[ -z "$git_branch" ]] && [[ -z "$python_version" ]]; then
+        # printf "\nNeither git branch nor python version if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(pyenv not installed): $txt_navy%s \n$bld_navy" "$USER" "$PWD"
+
+    elif [[ ! -z "$git_branch" ]] && [[ -z "$global_version" ]]; then
+        # printf "\nGit branch but no python version if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(pyenv not installed): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$PWD" "git branch => "  "$git_branch"
+
+    elif [[ -z "$git_branch" ]] && [[ ! -z "$python_version" ]]; then
+        # printf "\npython version but no git branch if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(python %s): $txtblu%s\n$txtrst$txt_navy" "$USER" "$python_version" "$PWD"
+
+    else
+        # printf "\nGit branch AND python version exists if clause.\n"
+        printf "\n$txtgrn%s $bldcyn(python %s): $txtblu%s \n$bldred%s $bldpur%s \n$txtrst$txt_navy" "$USER" "$python_version" "$PWD" "git branch => "  "$git_branch"
+    fi
+}
+
+PROMPT_COMMAND=print_before_the_prompt
 PS1='>>>> '
 
 # Git
